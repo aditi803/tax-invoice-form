@@ -1,5 +1,5 @@
 import axios from "axios";
-// import BaseUrl from "../constants/baseUrl";
+import BaseUrl from "../constants/baseUrl";
 import { toast } from "react-toastify";
 
 const axiosInstance = axios.create({
@@ -8,9 +8,6 @@ const axiosInstance = axios.create({
         Accept: "application/json"
     }
 });
-
-console.log(BaseUrl.API_URL,BaseUrl.SOCKET_URL)
-
 
 //axios.defaults.headers.common['Authorization'] = localStorage.getItem('token') 
 
@@ -38,6 +35,17 @@ axiosInstance.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+
+const axiosGetStaticData = (url, params = {}) => {
+
+    return axiosInstance.get(url, params)
+        .then(response => {
+            return { status: response.status, data: response.data }
+        })
+        .catch(err => {
+            throw err
+        });
+};
 
 const axiosGet = (url, params = {}) => {
 
@@ -141,6 +149,7 @@ export const ApiClient = {
     patch: axiosPatch,
     delete: postDelete,
     postFormData: axiosPostFormData,
+    getStatic:axiosGetStaticData
     // deleteWithData:deleteWithData
 }
 

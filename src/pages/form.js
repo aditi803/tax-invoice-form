@@ -1,6 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import "../styles/form.css"
+import { useDispatch } from 'react-redux'
+import { allCountries } from '../redux/slices/invoice'
 
-const form = () => {
+const MyForm = () => {
+
+    const dispatch = useDispatch()
+    const [country, setCountry] = useState("")
+
+    const getCountryData = (e) => {
+        dispatch(allCountries({
+            cb(res) {
+                if (res) {
+                    setCountry(res)
+                }
+                else {
+
+                }
+            }
+        }))
+    }
+
+    useEffect(() => {
+        getCountryData()
+    },[])
+
+    console.log(country, "country");
+
     return (
         <div className="container">
             <div className='row'>
@@ -32,30 +58,26 @@ const form = () => {
                             </div>
                         </div>
                         <div className='inv-personal-details'>
-                            <div class="form-group">
+                            <div className="form-group" style={{width:"50%"}}>
                                 <label for="name"></label>
                                 <input type="text" class="form-control" id="name" placeholder="Your Company" />
-                                <input type="text" class="form-control" id="name" placeholder="Your Company" />
+                                <input type="text" class="form-control" id="name" placeholder="Your Name" />
+                                <input type="text" class="form-control" id="name" placeholder="Company's GSTIN" />
+                                <input type="text" class="form-control" id="name" placeholder="Company's Address" />
+                                <input type="text" class="form-control" id="name" placeholder="City" />
+                                <select type="text" class="form-control" id="name">
+                                    <option>State</option>
+                                    <option>Uttaplk;ojhkguy</option>
+                                    <option>Uttaplk;ojhkguy</option>
+                                    <option>Uttaplk;ojhkguy</option>
+                                    <option>Uttaplk;ojhkguy</option>
+                                </select>
+                                <select type="text" class="form-control" id="name">
+                                    <option>
+                                       India
+                                    </option>
+                                </select>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Your Name" />
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email address</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter your email" />
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Password" />
-                        </div>
-
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="rememberMe" />
-                            <label class="form-check-label" for="rememberMe">Remember me</label>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -67,5 +89,5 @@ const form = () => {
     )
 }
 
-export default form
+export default MyForm
 
