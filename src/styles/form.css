@@ -1,0 +1,50 @@
+.invoice-form{
+    margin-top: 45px;
+    margin-bottom: 20px;
+}
+.invoice-generator{
+    min-height: 1100px;
+    padding: 40px 33px 0 35px;
+    background: #fff;
+    border: 1px solid #bfc8de;
+    border-radius: 10px;
+}
+.add-logo{
+    padding: 20px 20px 15px; 
+    border: 1px dashed rgb(219, 232, 253);
+    display: block;
+}
+.input-file{
+    display: none;
+}
+.add-logo-label{
+    display: block;
+}
+.upload-section-note{
+    margin: 15px 20px;
+    font-size: 14px;
+    width: 24%;
+    font-weight: 500;
+    display: block;
+}
+.logo-text{
+    font-size: 14px;
+    text-align: left;
+}
+.logo-text p{
+    font-weight: 300;
+    font-size: 12px;
+}
+.left-inv-header p{ 
+    text-align: left;
+    font-size: 47px;
+}
+.inv-personal-details{
+
+}
+.form-control {
+    border: none !important;
+}
+.form-control:hover {
+    border: 1px solid blue !important;
+}
