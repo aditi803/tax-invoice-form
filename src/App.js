@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import 'react-datepicker/dist/react-datepicker.css'; // Import the styles
 import InvoiceForm from './pages/form';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
