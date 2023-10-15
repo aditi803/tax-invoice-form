@@ -1,15 +1,55 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "../styles/form.css";
 import { useDispatch } from "react-redux";
-import { allCountries } from "../redux/slices/invoice";
 import {
   CountryDropdown,
   RegionDropdown,
-  CityDropdown,
 } from "react-country-region-selector";
 import DatePicker from "react-datepicker";
+import ReactDOMServer from 'react-dom/server';
+import { useDropzone } from 'react-dropzone';
+// import * as Images from "../../utilities/images";
+// import * as Images from '../utilities/images'
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
+import Template from "../components/Template";
 
 const MyForm = () => {
+  const [data, setData] = useState({
+    company: "",
+    name: "",
+    companyGST: "",
+    companyAddress: "",
+    city: "",
+    region: "",
+    country: "",
+    clientCompany: "",
+    clientGST: "",
+    clientAddress: "",
+    clientCompanyAddress: "",
+    clientCity: "",
+    clientRegion: "",
+    clientCountry: "",
+    invoiceDate: "",
+    dueDate: "",
+    ques1: "Notes",
+    ans1: "It was great doing business with you.",
+    ques2: "Terms & Conditions",
+    ans2: "Please make the payment by the due date.",
+  });
+
+  const handleDataChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setData({
+      ...data,
+      [name]: value,
+    });
+  };
+
+  console.log(data, ">>>>> data");
+
   // const dispatch = useDispatch()
   const [selectedCountry, setSelectedCountry] = useState("India");
   const [selectedState, setSelectedState] = useState("");
@@ -63,10 +103,18 @@ const MyForm = () => {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    setData({
+      ...data,
+      invoiceDate: date,
+    });
   };
 
   const handleDueDateChange = (date) => {
     setSelectedDueDate(date);
+    setData({
+      ...data,
+      dueDate: date,
+    });
   };
 
   // const getCountryData = (e) => {
@@ -111,10 +159,68 @@ const MyForm = () => {
     setBilling(updatedBilling);
   };
 
+   //onDrop
+   const onDrop = useCallback(acceptedFiles => {
+    const imageFile = acceptedFiles[0];
+    // if (!imageFile.name.match(/\.(jpg|jpeg|png|gif|svg)$/)) {
+    //     toast.error("Please select a valid image.");
+    //     return false;
+    // }
+    // if (!imageFile.name.match(/\.(jpg|jpeg|png|gif|svg|pdf)$/i)) {
+    //     toast.error("Please select a valid image or PDF file.");
+    //     return false;
+    // }
+
+    console.log(imageFile, 'image file');
+    let params = {
+        photo: imageFile,
+    }
+
+    // dispatch(addPostOpportunityUploadPhotoOrPdf({
+    //     ...params, cb(res) {
+    //         if (res.status) {
+    //             setPhotoUpload(res?.data?.payload?.url);
+    //             setPhotoInfo(res?.data?.payload)
+    //         }
+    //         else {
+    //         }
+    //     }
+    // }))
+
+}, [])
+
+  const { getRootProps, getInputProps } =
+
+  useDropzone({
+      onDrop,
+      accept: {
+          'image/jpeg': [],
+          'image/jpg': [],
+          'image/png': [],
+      }
+  });
+
   console.log(billing, "billing ");
 
+  const downloadPdfDocument = (e) => {
+    e.preventDefault()
+    console.log(typeof document.getElementById('hhh'))
+    const div = document.createElement('div');
+    const staticElement = ReactDOMServer.renderToStaticMarkup( <Template data={data}/>)
+    div.innerHTML = staticElement
+    console.log(div)
+    document.body.appendChild(div);
+    html2canvas(div).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, "JPEG", 0, 0);
+      pdf.save('Invoice.pdf')
+    });
+    document.body.removeChild(div)
+  };
+
   return (
-    <div className="container invoice-form">
+    <div className="container" id="hhh">
       <div className="row">
         <div className="col-md-8">
           <form className="invoice-generator">
@@ -123,12 +229,15 @@ const MyForm = () => {
                 <div className="row">
                   <div className="col-3">
                     <label className="add-logo">
-                      <input type="file" className="input-file" />
+                    <div {...getRootProps({ className: "dropzone" })}>
+                    <input {...getInputProps()} />
                       <span className="add-logo-label">
                         {/* <img src={Images.uploadIcon} alt="upload-img" /> */}
-
+                        {/* <img src={Images.uploadIcon} alt="uploadIcon" className='img-fluid uploadfileIcon hjgfhjfhj' /> */}
                         <div>Upload</div>
                       </span>
+                    </div>
+                     
                     </label>
                   </div>
                   <div className="col-4 logo-text">
@@ -150,28 +259,38 @@ const MyForm = () => {
                   type="text"
                   className="form-control"
                   id="name"
+                  name="company"
+                  onChange={handleDataChange}
                   placeholder="Your Company"
                 />
                 <input
                   type="text"
                   className="form-control"
                   id="name"
+                  name="name"
+                  onChange={handleDataChange}
                   placeholder="Your Name"
                 />
                 <input
                   type="text"
                   className="form-control"
                   id="name"
+                  onChange={handleDataChange}
+                  name="companyGST"
                   placeholder="Company's GSTIN"
                 />
                 <input
                   type="text"
                   className="form-control"
                   id="name"
+                  onChange={handleDataChange}
+                  name="companyAddress"
                   placeholder="Company's Address"
                 />
                 <input
                   type="text"
+                  name="city"
+                  onChange={handleDataChange}
                   className="form-control"
                   id="name"
                   placeholder="City"
@@ -210,29 +329,39 @@ const MyForm = () => {
                     <input
                       type="text"
                       className="form-control"
+                      onChange={handleDataChange}
                       id="name"
+                      name="clientCompany"
                       placeholder="Your Client's Company"
                     />
                     <input
                       type="text"
                       className="form-control"
+                      onChange={handleDataChange}
+                      name="clientGST"
                       id="name"
                       placeholder="Client's GSTIN"
                     />
                     <input
                       type="text"
+                      onChange={handleDataChange}
                       className="form-control"
+                      name="clientAddress"
                       id="name"
                       placeholder="Client's Address"
                     />
                     <input
                       type="text"
+                      onChange={handleDataChange}
                       className="form-control"
+                      name="clientCompanyAddress"
                       id="name"
                       placeholder="Company's Address"
                     />
                     <input
                       type="text"
+                      onChange={handleDataChange}
+                      name="clientCity"
                       className="form-control"
                       id="name"
                       placeholder="City"
@@ -412,44 +541,62 @@ const MyForm = () => {
               <p className="form-footer" onClick={addBillingDetail}>
                 Add Line Item
               </p>
-              <p className="form-footer">Total</p>
+              <button onClick={downloadPdfDocument}>
+                Download
+              </button>
+              <p className="form-footer">
+                Total :{" "}
+                {billing.reduce(
+                  (total, { qty, rate }) => total + qty * rate * 1,
+                  0
+                )}{" "}
+              </p>
             </div>
             <div className="Form-footer">
-                <input
-                  type="text"
-                  value={notes}
-                  onChange={(e) => {
-                    setNotes(e.target.value);
-                  }}
-                  className="form-control"
-                />
-              <textarea
-                value={notesDesc}
-                onChange={(e) => setNotesDesc(e.target.value)}
+              <input
+                type="text"
+                // value={notes}
+                name="ques1"
+                value={data.ques1}
+                onChange={handleDataChange}
+                // onChange={(e) => {
+                //   setNotes(e.target.value);
+                // }}
                 className="form-control"
               />
-              
-                <input
-                  type="text"
-                  value={condition}
-                  onChange={(e) => {
-                    setCondition(e.target.value);
-                  }}
-                  className="form-control"
-                />
-             
               <textarea
-                value={conditionDesc}
-                onChange={(e) => setConditionDesc(e.target.value)}
+                name="ans1"
+                value={data.ans1}
+                onChange={handleDataChange}
+                // value={notesDesc}
+                // onChange={(e) => setNotesDesc(e.target.value)}
+                className="form-control"
+              />
+
+              <input
+                type="text"
+                name="ques2"
+                value={data.ques2}
+                onChange={handleDataChange}
+                // value={condition}
+                // onChange={(e) => {
+                //   setCondition(e.target.value);
+                // }}
+                className="form-control"
+              />
+
+              <textarea
+                name="ans2"
+                onChange={handleDataChange}
+                value={data.ans2}
+                // value={conditionDesc}
+                // onChange={(e) => setConditionDesc(e.target.value)}
                 className="form-control"
               />
             </div>
-
-           
           </form>
         </div>
-        <div className="col-md-2">
-        </div>
+        <div className="col-md-2"></div>
       </div>
     </div>
   );

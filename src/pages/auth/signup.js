@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { userSignUp, userSocialLoginSignup } from "../../redux/slices/auth";
 import { useAuthSelector } from "../../redux/selector/auth";
-import '../../styles/signup.css'
+import { userSignUp, userSocialLoginSignup } from "../../redux/slices/auth";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -162,7 +161,6 @@ const Signup = () => {
     }))
   }
 
-
   useEffect(() => {
     window.scrollTo(0, 0)
     document.title = "Sign-up";
@@ -192,30 +190,30 @@ const Signup = () => {
               <div className='form-group col-md-6 mb-3'>
                 <input onChange={(e) => handleChange(e)} maxLength={25} value={formData.lastName} name="lastName" type='text' className='customFormControl' placeholder='Last Name' />
               </div>
-              <div className='form-group col-md-6 mb-3'>
+              <div className='form-group col-md-12 mb-3'>
                 <input onChange={(e) => handleChange(e)} value={formData.email} name="email" type='email' className='customFormControl' placeholder='Company Email Address' />
               </div>
-              <div className='form-group col-md-6 mb-3'>
+              <div className='form-group col-md-12 mb-3'>
                 <input onChange={(e) => handleChange(e)} type={passwordShown ? "text" : "password"} value={formData.password} autoComplete="on" name="password" className='customFormControl' placeholder='Password' />
                 <span className="toggle_password_ info_icon" onClick={() => { togglePasswordVisiblity(!passwordShown) }}>
                   <span className={passwordShown ? "show-icon togglePassword" : "hide-icon togglePassword"} id=""></span>
                 </span>
               </div>
-              <div className="form-group col-md-6 mb-3">
+              <div className="form-group col-md-12 mb-3">
                 <div className='d-flex'>
                   <input type="checkbox" id="accpt" className='checkBox me-2' onChange={(e) => { handleChange(e, "termCondition"); }} />
                   <label htmlFor="accpt" className='checkBoxTxt align-items-start align-items-md-center'>
                     <span>
-                      Yes, I understand and agree to the Terms of Service.
+                      Yes, I understand and agree to the GetOpps Terms of Service , including the User Agreement and <Link to='/privacyPolicy' className='otherLink'>Privacy Policy</Link>
                     </span>
                   </label>
                 </div>
               </div>
               <div className='col-md-8 mt-3 mb-3 text-center'>
                 <button className='primaryBtn w-100 mt-2' type="submit">
-                  {/* {authSelector.loading && (
+                  {authSelector.loading && (
                     <span className="spinner-border spinner-border-sm"></span>
-                  )} */}
+                  )}
 
                   <span> Create account</span>
                 </button>

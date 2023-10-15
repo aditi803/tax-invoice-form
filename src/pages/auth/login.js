@@ -82,14 +82,14 @@ const Login = (props) => {
                         navigate('/verification', { state: { id: res?.data?.payload?.user_id } });
                     }
                     else if (res.data.payload.user.step === 6) {
-                        navigate("/dashboard")
+                        navigate("/")
                     }
                     else if (res.data.payload.user.step) {
                         navigate('/registration', { state: { step: res?.data?.payload?.user?.step } });
                     }
 
                     else {
-                        navigate("/dashboard")
+                        navigate("/")
                     }
                 }
             }))
@@ -113,14 +113,14 @@ const Login = (props) => {
         dispatch(userSocialLoginSignup({
             ...params, cb(res) {
                 if (res.data.payload.user.step === 6) {
-                    navigate("/dashboard")
+                    navigate("/")
                 }
                 else if (res.data.payload.user.step) {
                     navigate('/registration', { state: { step: res?.data?.payload?.user?.step } });
                 }
 
                 else {
-                    navigate("/dashboard")
+                    navigate("//")
                 }
 
             }
@@ -158,7 +158,7 @@ const Login = (props) => {
                             </Link> */}
                             <form onSubmit={(e) => handleSubmit(e)} className='signupForm row justify-content-center mt-5'>
                                 <div className='form-group col-md-12 mb-3'>
-                                    <input value={formData.email} autoComplete="=off" name="email" type='email' className='customFormControl' placeholder='Email Address' onChange={(e) => handleChange(e)} />
+                                    <input value={formData.email} name="email" type='email' className='customFormControl' placeholder='Email Address' onChange={(e) => handleChange(e)} />
                                 </div>
                                 <div className='form-group col-md-12 mb-3'>
                                     <input autoComplete="on" value={formData.password} name="password" type={passwordShown ? "text" : "password"} className='customFormControl' placeholder='Password' onChange={(e) => handleChange(e)} />
@@ -175,9 +175,9 @@ const Login = (props) => {
                                         <span>Login</span>
                                     </button>
                                     <div className='accountRelate'>
-                                        <p className='innerTxt mt-4 w-100'>Create new Account <Link className='linkTxt' to='/signup'><b>Signup</b></Link></p>
+                                        <p className='innerTxt mt-4 w-100'>Create new Account <Link className='linkTxt' to='/chooserolesfor=signup'><b>Signup</b></Link></p>
                                     </div>
-                                    <Link to="/forgot-password" className="forgotPassword"><p>Forgot password</p></Link>
+                                    <Link to="/forgetPassword" className="forgotPassword"><p>Forgot password</p></Link>
                                 </div>
                             </form>
                             {/* <p className='continue'>or</p> */}

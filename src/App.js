@@ -13,6 +13,10 @@ import Header from "./components/header";
 import Signup from "./pages/auth/signup";
 import Login from "./pages/auth/login";
 import ForgetPassword from "./pages/auth/forgotPassword";
+import ForgetPasswordVerification from "./pages/auth/forgetPasswordVerification";
+import ResetPassword from "./pages/auth/resetPassword";
+import Changepassword from "./pages/user/changePassword";
+import UserInfo from "./pages/user";
 
 
 function App() {
@@ -28,6 +32,10 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<InvoiceForm />} />
               <Route path="/forgot-password" element={<ForgetPassword />} />
+              <Route path="/forgot-password-verification" element={<ForgetPasswordVerification />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/change-password" element={<Changepassword />} />
+              <Route path="/user-info" element={<UserInfo />} />
             </Routes>
           </BrowserRouter>
         </PersistGate>
