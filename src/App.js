@@ -9,6 +9,7 @@ import store from './redux';
 import { persistor } from './redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter } from "react-router-dom";
+import Header from './components/header';
 
 function App() {
   return (
@@ -17,20 +18,12 @@ function App() {
       <PersistGate loading={null} persistor={persistor}>
       <BrowserRouter>
             {/* <Router /> */}
+            <Header />
             <InvoiceForm />
           </BrowserRouter>
       </PersistGate>
       </Provider>
       <ToastContainer
-      // position="top-right"
-      // autoClose={5000}
-      // hideProgressBar={false}
-      // newestOnTop={true}
-      // closeOnClick
-      // rtl={false}
-      // pauseOnFocusLoss
-      // draggable
-      // pauseOnHover
       />
     </div>
   );

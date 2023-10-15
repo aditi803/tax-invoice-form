@@ -16,6 +16,14 @@ const MyForm = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedDueDate, setSelectedDueDate] = useState(null);
   const [selectedCity, setSelectedCity] = useState("");
+  const [notes, setNotes] = useState("Notes");
+  const [notesDesc, setNotesDesc] = useState(
+    "It was great doing business with you."
+  );
+  const [condition, setCondition] = useState("Terms & Conditions");
+  const [conditionDesc, setConditionDesc] = useState(
+    "Please make the payment by the due date."
+  );
 
   const [billingSelectedCountry, setBillingSelectedCountry] = useState("India");
   const [billingSelectedState, setBillingSelectedState] = useState("");
@@ -24,19 +32,34 @@ const MyForm = () => {
     {
       id: 1,
       desc: "brochure",
+      subDesc: "",
       qty: 2,
+      rate: "100.00",
+      sgst: "6",
+      cgst: "6",
+      cess: "0",
     },
     {
       id: 2,
       desc: "",
+      subDesc: "",
       qty: 1,
+      rate: "0.00",
+      sgst: "0",
+      cgst: "0",
+      cess: "0",
     },
     {
       id: 3,
       desc: "",
+      subDesc: "",
       qty: 1,
-    }
-]);
+      rate: "0.00",
+      sgst: "0",
+      cgst: "0",
+      cess: "0",
+    },
+  ]);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -61,7 +84,34 @@ const MyForm = () => {
 
   // console.log(country, "country");
 
-  console.log(selectedCountry, "selected country");
+  const addBillingDetail = () => {
+    setBilling([
+      ...billing,
+      {
+        desc: "",
+        subDesc: "",
+        qty: 1,
+        rate: "0.00",
+        sgst: "0",
+        cgst: "0",
+        cess: "0",
+      },
+    ]);
+  };
+
+  const removeBillingItem = (index) => {
+    const updatedBilling = [...billing];
+    updatedBilling.splice(index, 1);
+    setBilling(updatedBilling);
+  };
+
+  const handleInputChange = (index, field, value) => {
+    const updatedBilling = [...billing];
+    updatedBilling[index][field] = value;
+    setBilling(updatedBilling);
+  };
+
+  console.log(billing, "billing ");
 
   return (
     <div className="container">
@@ -244,8 +294,8 @@ const MyForm = () => {
             </div>
 
             <div className="billing-details mt-5">
-              <table>
-                <thead>
+              <table className="table">
+                <thead className="table-dark">
                   <tr>
                     <th>Item Description</th>
                     <th>Qty</th>
@@ -254,23 +304,151 @@ const MyForm = () => {
                     <th>CGST</th>
                     <th>Cess</th>
                     <th>Amount</th>
-                    
                   </tr>
                 </thead>
                 <tbody>
-                  {billing.map((row) => (
-                    <tr key={row.id}>
-                      <td>{row.desc}</td>
-                      <td>{row.qty}</td>
-                    </tr>
+                  {billing.map((row, index) => (
+                    <>
+                      <tr key={row.id}>
+                        <td>
+                          {" "}
+                          <textarea
+                            placeholder="Enter description "
+                            value={row.desc}
+                            className="form-control"
+                            onChange={(e) =>
+                              handleInputChange(index, "desc", e.target.value)
+                            }
+                          />
+                          <br />
+                          <input
+                            type="text"
+                            value={row.subDesc}
+                            placeholder="HSN/SAC"
+                            className="form-control"
+                            onChange={(e) =>
+                              handleInputChange(
+                                index,
+                                "subDesc",
+                                e.target.value
+                              )
+                            }
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            value={row.qty}
+                            className="form-control"
+                            onChange={(e) =>
+                              handleInputChange(index, "qty", e.target.value)
+                            }
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            value={row.rate}
+                            className="form-control"
+                            onChange={(e) =>
+                              handleInputChange(index, "rate", e.target.value)
+                            }
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            value={row.sgst}
+                            className="form-control"
+                            onChange={(e) =>
+                              handleInputChange(index, "sgst", e.target.value)
+                            }
+                          />
+                          <br />
+                          <p>{row.qty * row.sgst}.00</p>
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            value={row.cgst}
+                            className="form-control"
+                            onChange={(e) =>
+                              handleInputChange(index, "cgst", e.target.value)
+                            }
+                          />
+                          <br />
+                          <p>{row.qty * row.cgst}.00</p>
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            value={row.cess}
+                            className="form-control"
+                            onChange={(e) =>
+                              handleInputChange(index, "cess", e.target.value)
+                            }
+                          />
+                          <br />
+                          <p>{row.qty * row.cess}.00</p>
+                        </td>
+                        <td>
+                          <p>{row.qty * row.rate}.00</p>
+                          {billing.length > 0 ? (
+                            <button
+                              className="btn"
+                              onClick={() => removeBillingItem(index)}
+                            >
+                              Remove
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                        </td>
+                      </tr>
+                    </>
                   ))}
                 </tbody>
               </table>
+              <p className="form-footer" onClick={addBillingDetail}>
+                Add Line Item
+              </p>
+              <p className="form-footer">Total</p>
             </div>
-            <button type="submit" class="btn btn-primary">
-              Submit
-            </button>
+            <div className="Form-footer">
+                <input
+                  type="text"
+                  value={notes}
+                  onChange={(e) => {
+                    setNotes(e.target.value);
+                  }}
+                  className="form-control"
+                />
+              <textarea
+                value={notesDesc}
+                onChange={(e) => setNotesDesc(e.target.value)}
+                className="form-control"
+              />
+              
+                <input
+                  type="text"
+                  value={condition}
+                  onChange={(e) => {
+                    setCondition(e.target.value);
+                  }}
+                  className="form-control"
+                />
+             
+              <textarea
+                value={conditionDesc}
+                onChange={(e) => setConditionDesc(e.target.value)}
+                className="form-control"
+              />
+            </div>
+
+           
           </form>
+        </div>
+        <div className="col-md-2">
         </div>
       </div>
     </div>
