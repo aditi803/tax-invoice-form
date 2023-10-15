@@ -13,7 +13,7 @@ import Header from "./components/header";
 import Signup from "./pages/auth/signup";
 import Login from "./pages/auth/login";
 import ForgetPassword from "./pages/auth/forgotPassword";
-import ForgetPasswordVerification from "./pages/auth/forgetPasswordVerification";
+import ForgetPasswordVerification from "./pages/auth/forgotPasswordVerification";
 import ResetPassword from "./pages/auth/resetPassword";
 import Changepassword from "./pages/user/changePassword";
 import UserInfo from "./pages/user";
