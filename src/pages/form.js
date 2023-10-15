@@ -114,7 +114,7 @@ const MyForm = () => {
   console.log(billing, "billing ");
 
   return (
-    <div className="container">
+    <div className="container invoice-form">
       <div className="row">
         <div className="col-md-8">
           <form className="invoice-generator">

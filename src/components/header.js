@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
   return (
@@ -7,7 +8,8 @@ const Header = () => {
         <a href="/" className="navbar-brand">Your Logo</a>
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a href="/" className="nav-link">Signup</a>
+          <Link to='/signup' className="footerLinks">Signup</Link>
+            {/* <a href="/signup" className="nav-link">Signup</a> */}
           </li>
           <li className="nav-item">
             <a href="/about" className="nav-link">Save Online</a>

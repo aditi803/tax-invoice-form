@@ -1,0 +1,8 @@
+.detailsContainer {
+    background: #FFFFFF;
+    border-radius: 8px;
+    padding: 4% 13%;
+    /* margin: 40px 0; */
+    display: block;
+    border: 1px solid black;
+}
