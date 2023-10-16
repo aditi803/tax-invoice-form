@@ -13,7 +13,8 @@ const Changepassword = (props) => {
     const [ConfirmpasswordShown, ConfirmsetPasswordShown] = useState(false);
     const [formData, setFormData] = useState({
         oldpassword: "",
-        newpassword: ""
+        newpassword: "",
+        confirmPassword:""
     });
 
     //password field show or hide
@@ -89,6 +90,13 @@ const Changepassword = (props) => {
                     <div className='form-group  mb-3'>
                         <label className='postopportunity_label'>New Password</label>
                         <input type={NewpasswordShown ? "text" : "password"} value={formData.newpassword} name="newpassword" onChange={(e) => handleChange(e)} className='customFormControl' placeholder='New Password' />
+                        <span className="toggle_password_ info_icon" onClick={() => { NewtogglePasswordVisiblity(!NewpasswordShown) }}>
+                            <span className={NewpasswordShown ? "show-icon togglePassword" : "hide-icon togglePassword"} id=""></span>
+                        </span>
+                    </div>
+                    <div className='form-group  mb-3'>
+                        <label className='postopportunity_label'>Confirm Password</label>
+                        <input type={NewpasswordShown ? "text" : "password"} value={formData.confirmPassword} name="newpassword" onChange={(e) => handleChange(e)} className='customFormControl' placeholder='New Password' />
                         <span className="toggle_password_ info_icon" onClick={() => { NewtogglePasswordVisiblity(!NewpasswordShown) }}>
                             <span className={NewpasswordShown ? "show-icon togglePassword" : "hide-icon togglePassword"} id=""></span>
                         </span>
