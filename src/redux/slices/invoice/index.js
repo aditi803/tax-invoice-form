@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    allPost: {},
     allCountries: {},
+    invoiceData:{},
     loading: false,
 };
 
@@ -10,17 +10,11 @@ export const invoiceSlice = createSlice({
     name: "invoice",
     initialState,
     reducers: {
-        allPostList: (state) => {
+        
+        invoiceData: (state) => {
             state.loading = true;
         },
-        setAllPost: (state, action) => {
-            state.loading = false;
-            state.allPost = action.payload;
-        },
-        allCountries: (state) => {
-            state.loading = true;
-        },
-        setAllCountries: (state, action) => {
+        setInvoiceData: (state, action) => {
             state.loading = false;
             state.allPost = action.payload;
         },
@@ -32,6 +26,8 @@ export const invoiceSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
+    invoiceData,
+    setInvoiceData,
     allPostList,
     setAllPost,
     allCountries,

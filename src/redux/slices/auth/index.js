@@ -25,6 +25,8 @@ const initialState = {
   memberShipAmount: {},
   searchCompanyUsers:[],
   isLoggedIn: false,
+
+  uploadImage:{},
   loading: false,
 };
 
@@ -32,6 +34,21 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    uploadImage: (state) => {
+      state.loading = true;
+    },
+    setUploadImage: (state, action) => {
+      state.loading = false;
+      state.uploadImage = action.payload;
+    },
+    // companyLogoUpload: (state) => {
+    //   state.loading = true;
+    // },
+    // setCompanyLogoUpload: (state, action) => {
+    //   state.loading = false;
+    //   state.editProfile = action.payload;
+    // },
+
     userLogin: (state) => {
       state.loading = true;
     },
@@ -306,6 +323,8 @@ export const authSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const {
   userLogin,
+  setUploadImage,
+  uploadImage,
   setUserLogin,
   userSignUp,
   setUserSignUp,
