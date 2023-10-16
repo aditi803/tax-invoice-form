@@ -33,7 +33,7 @@ const ForgetPassword = () => {
         dispatch(userForgetPassword({
             ...params, cb(res) {
                 if (res.status) {
-                    navigate("/forgetPasswordVerify", { state: { email: email } })
+                    navigate("/reset-password", { state: { email: email } })
                 }
 
             }

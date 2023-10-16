@@ -50,8 +50,8 @@ const Changepassword = (props) => {
         dispatch(changePassword({
             ...params, cb(res) {
                 if (res.status) {
-                    props.refreshUserDetail();
-                    props.close();
+                    // props.refreshUserDetail();
+                    // props.close();
                 }
                 else {
 

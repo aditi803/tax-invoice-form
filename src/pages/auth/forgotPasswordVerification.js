@@ -3,17 +3,20 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { MuiOtpInput } from 'mui-one-time-password-input'
-import { forgetPasswodVerifyOtp,userForgetPassword } from '../../redux/slices/auth';
+import { forgetPasswodVerifyOtp,resendOtp,resetPassword,userForgetPassword, userVerifyOtp, verifyEmail } from '../../redux/slices/auth';
 import { useAuthSelector } from '../../redux/selector/auth';
 import { Button } from 'bootstrap';
 
 
 const ForgotPasswordVerification = () => {
+
+    const email = localStorage.getItem('email');
+    console.log(email, "email entered");
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
     const authSelector = useAuthSelector()
-    let email = location?.state?.email;
+    // let email = location?.state?.email;
     const [otp, setOtp] = useState('');
 
     //onchange otp
@@ -31,26 +34,30 @@ const ForgotPasswordVerification = () => {
         let params = {
             email: email,
             otp: parseInt(otp),
+            type:"1"
         }
-        dispatch(forgetPasswodVerifyOtp({
+        dispatch(verifyEmail({
             ...params, cb(res) {
                 if (res.status) {
-                    navigate("/resetPassword", { state: { email: email} })
+                    console.log(res,"function entered");
+                    navigate("/")
                 }
                 else {
-
-                }
+                    console.log("Error occured")
+                }   
             }
         }))
     }
 
-    const resendOtp = () => {
+    const handleResendOtp = () => {
         let params = {
             email: email
         }
-        dispatch(userForgetPassword({
+        dispatch(resendOtp({
             ...params, cb(res) {
-                if (res.status) {
+                if (res) {
+                    toast.success("OTP send successfully")
+                    console.log(res, "response received");
                 }
 
             }
@@ -87,7 +94,7 @@ const ForgotPasswordVerification = () => {
                                     <span>Submit</span>
                                 </button>
                             </form>
-                            <p className='innerTxt'>Didn't receive the code yet ? <span className='linkTxt' onClick={()=> resendOtp()}><b>Resend</b></span></p>
+                            <p className='innerTxt'>Didn't receive the code yet ? <span className='linkTxt' onClick={()=> handleResendOtp()}><b>Resend</b></span></p>
                         </div>
                     </div>
                 </div>

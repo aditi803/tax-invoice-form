@@ -113,13 +113,13 @@ const Signup = () => {
         first_name: formData.firstName,
         last_name: formData.lastName,
         password: formData.password,
-        role_id: roleId,
-        business_type:id
       }
       dispatch(userSignUp({
         ...params, cb(res) {
           if (res.status) {
-            navigate('/verification', { state: { id: res?.data?.payload?.user_id, status: id } });
+            console.log(res, "response of email");
+            navigate('/forgot-password-verification', { state: { id: res?.data?.payload?.user_id, status: id } });
+            localStorage.setItem('email', formData.email.trim())
           }
           else {
           }
@@ -128,38 +128,6 @@ const Signup = () => {
     }
   }
 
-  const onSocialMediaResponse = (response) => {
-
-    if (!response?.accessToken) {
-      return;
-    }
-
-    let params = {
-      social_token: response?.accessToken,
-      email: response?.profileObj?.email,
-      first_name: response?.profileObj?.name,
-      role_id: roleId,
-      social_type: 1,
-      social_id: response?.profileObj?.googleId,
-      business_type:id
-    }
-    dispatch(userSocialLoginSignup({
-      ...params, cb(res) {
-        if (res.data.payload.user.step === 6) {
-          navigate("/dashboard")
-        }
-        else if (res.data.payload.user.step) {
-          navigate('/registration', { state: { step: res?.data?.payload?.user?.step } });
-        }
-
-        else {
-          navigate("/dashboard")
-        }
-
-
-      }
-    }))
-  }
 
   useEffect(() => {
     window.scrollTo(0, 0)

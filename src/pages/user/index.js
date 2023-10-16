@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { userInfo } from '../../redux/slices/auth';
 
 function UserInfo() {
-  const [userInfo, setUserInfo] = useState({
+  const dispatch = useDispatch()
+  // const [userInfo, setUserInfo] = useState({
+  //   username: 'john_doe',
+  //   fullName: 'John Doe',
+  //   email: 'john@example.com',
+  //   bio: 'A React enthusiast',
+  // });
+   const [user, setUser] = useState({
     username: 'john_doe',
     fullName: 'John Doe',
     email: 'john@example.com',
     bio: 'A React enthusiast',
   });
+  
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -21,8 +31,25 @@ function UserInfo() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserInfo({ ...userInfo, [name]: value });
+    setUser({ ...user, [name]: value });
   };
+
+  const getUser = () => {
+    let params = {
+
+    }
+    dispatch(userInfo({
+      ...params, cb(res) {
+        if (res.status) {
+          console.log(res,"User details")
+        }
+      }
+    }))
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [])
 
   return (
     <div className="user-info">
@@ -34,7 +61,7 @@ function UserInfo() {
             type="text"
             id="username"
             name="username"
-            value={userInfo.username}
+            value={user.username}
             onChange={handleInputChange}
           />
 
@@ -43,7 +70,7 @@ function UserInfo() {
             type="text"
             id="fullName"
             name="fullName"
-            value={userInfo.fullName}
+            value={user.fullName}
             onChange={handleInputChange}
           />
 
@@ -52,7 +79,7 @@ function UserInfo() {
             type="email"
             id="email"
             name="email"
-            value={userInfo.email}
+            value={user.email}
             onChange={handleInputChange}
           />
 
@@ -60,16 +87,16 @@ function UserInfo() {
           <textarea
             id="bio"
             name="bio"
-            value={userInfo.bio}
+            value={user.bio}
             onChange={handleInputChange}
           />
         </div>
       ) : (
         <div>
-          <p><strong>Username:</strong> {userInfo.username}</p>
-          <p><strong>Full Name:</strong> {userInfo.fullName}</p>
-          <p><strong>Email:</strong> {userInfo.email}</p>
-          <p><strong>Bio:</strong> {userInfo.bio}</p>
+          <p><strong>Username:</strong> {user.username}</p>
+          <p><strong>Full Name:</strong> {user.fullName}</p>
+          <p><strong>Email:</strong> {user.email}</p>
+          <p><strong>Bio:</strong> {user.bio}</p>
         </div>
       )}
 

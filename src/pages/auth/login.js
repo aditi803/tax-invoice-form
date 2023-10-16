@@ -9,9 +9,11 @@ const Login = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const id = location?.state?.id;
-    const roleId = location?.state?.roleId;
-    console.log(roleId, "roleId");
+    // const id = location?.state?.id;
+    // const roleId = location?.state?.roleId;
+
+
+    // console.log(roleId, "roleId");
     const authSelector = useAuthSelector()
     const [errorMessages, setErrorMessages] = useState({});
     const [formData, setFormData] = useState({
@@ -74,21 +76,11 @@ const Login = (props) => {
             let params = {
                 email: formData.email.trim(),
                 password: formData.password,
-                role_id: id,
+                // role_id: id,
             }
             dispatch(userLogin({
                 ...params, cb(res) {
-                    if (res.data.payload.user_id) {
-                        navigate('/verification', { state: { id: res?.data?.payload?.user_id } });
-                    }
-                    else if (res.data.payload.user.step === 6) {
-                        navigate("/")
-                    }
-                    else if (res.data.payload.user.step) {
-                        navigate('/registration', { state: { step: res?.data?.payload?.user?.step } });
-                    }
-
-                    else {
+                    if (res.status) {
                         navigate("/")
                     }
                 }
@@ -96,45 +88,8 @@ const Login = (props) => {
         }
     }
 
-    const onSocialMediaResponse = (response) => {
-        if (!response?.accessToken) {
-            return;
-        }
-
-        let params = {
-            social_token: response?.accessToken,
-            email: response?.profileObj?.email,
-            first_name: response?.profileObj?.name,
-            role_id: id,
-            social_type: 1,
-            social_id: response?.profileObj?.googleId,
-            business_type: id
-        }
-        dispatch(userSocialLoginSignup({
-            ...params, cb(res) {
-                if (res.data.payload.user.step === 6) {
-                    navigate("/")
-                }
-                else if (res.data.payload.user.step) {
-                    navigate('/registration', { state: { step: res?.data?.payload?.user?.step } });
-                }
-
-                else {
-                    navigate("//")
-                }
-
-            }
-        }))
-    }
-
     useEffect(() => {
         window.scrollTo(0, 0)
-        document.title = "Login";
-
-    }, []);
-
-    useEffect(() => {
-        onSocialMediaResponse()
         document.title = "Login";
 
     }, []);
@@ -151,11 +106,6 @@ const Login = (props) => {
                 <div className="row justify-content-center">
                     <div className="col-md-7 text-center">
                         <div className="detailsContainer">
-                            <h3 className="headTxt mt-3 mb-4">Login as a <span className="highLightTxt">{id === 1 ? "buyer" : id === 2 ? "supplier" : "both"}</span></h3>
-                            {/* <Link to='' className='continueField'>
-                                <img src={Images.googleIcon} className='conitnueIcon' alt='img-fluid' />
-                                Continue with Google
-                            </Link> */}
                             <form onSubmit={(e) => handleSubmit(e)} className='signupForm row justify-content-center mt-5'>
                                 <div className='form-group col-md-12 mb-3'>
                                     <input value={formData.email} name="email" type='email' className='customFormControl' placeholder='Email Address' onChange={(e) => handleChange(e)} />
@@ -177,7 +127,7 @@ const Login = (props) => {
                                     <div className='accountRelate'>
                                         <p className='innerTxt mt-4 w-100'>Create new Account <Link className='linkTxt' to='/chooserolesfor=signup'><b>Signup</b></Link></p>
                                     </div>
-                                    <Link to="/forgetPassword" className="forgotPassword"><p>Forgot password</p></Link>
+                                    <Link to="/forgot-password" className="forgotPassword"><p>Forgot password</p></Link>
                                 </div>
                             </form>
                             {/* <p className='continue'>or</p> */}

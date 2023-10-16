@@ -3,7 +3,7 @@ import { ApiClient } from '../../../utilities/api';
 // import ApiPath from '../../../constants/apiPath';
 import ApiPath from "../../../constants/apiPath"
 import { toast } from 'react-toastify';
-import { onErrorStopLoad, setAllCountries } from '../../slices/invoice';
+import { onErrorStopLoad, setAddInvoice, setAllCountries, setDeleteInvoice, setInvoiceData, setSingleInvoice, setUpdateInvoice } from '../../slices/invoice';
 // import { onErrorStopLoad, setAllDashboardData, setAllPost, setImageUplaod, setUserPost,setUserPostLike,setUserPostComment, setAllPostComment, setGetDashboardOpportunity, setPostFeature, setGetPendingEndorsement, setUpdateEndorsementsRequest, setAllUserWithSearch,setUpdateUserProfileStatus, setPostUserLikeList, setPostImageUplaod, setDisableEnableComment, setDeletePost, setPostSingleDetails, setEditPost, setCommentLike, setNestedComments, setPaymentSession, setVerifySession, setMemberShipPlans} from '../../slices/dashboard';
 
 // import { updateUserStep } from '../../slices/auth';
@@ -30,7 +30,7 @@ function* addInvoice(action) {
   try {
     const resp = yield call(ApiClient.post, action.url = ApiPath.InvoiceApiPath.ADD_INVOICE, action.payload = action.payload);
     if (resp.status) {
-      // yield put(setUserPost(resp.data.payload));
+      yield put(setAddInvoice(resp.data.payload));
       yield call(action.payload.cb, action.res = resp)
       // toast.success(action.res.data.msg);
     }
@@ -38,9 +38,9 @@ function* addInvoice(action) {
       throw resp
     }
   } catch (e) {
-    // yield put(setUserPost({}));
+    yield put(setAddInvoice({}));
     yield put(onErrorStopLoad())
-    toast.error(e.response.data.msg);
+    // toast.error(e.response.data.msg);
   }
 }
 
@@ -48,7 +48,7 @@ function* updateInvoice(action) {
   try {
     const resp = yield call(ApiClient.put, action.url = ApiPath.InvoiceApiPath.UPDATE_INVOICE, action.payload = action.payload);
     if (resp.status) {
-      // yield put(setUserPostLike(resp.data.payload));
+      yield put(setUpdateInvoice(resp.data.payload));
       yield call(action.payload.cb, action.res = resp)
       // toast.success(action.res.data.msg);
     }
@@ -56,18 +56,18 @@ function* updateInvoice(action) {
       throw resp
     }
   } catch (e) {
-    // yield put(setUserPostLike({}));
+    yield put(setUpdateInvoice({}));
     yield put(onErrorStopLoad())
     // toast.error(e.response.data.msg);
   }
 }
 
-function* getSingleInvoice(action) {
+function* singleInvoice(action) {
   try {
     const resp = yield call(ApiClient.get, action.url =`${ApiPath.InvoiceApiPath.SINGLE_INVOICE}/${action.payload.id}`,
       action.payload = action.payload);
     if (resp.status) {
-      // yield put(setPostUserLikeList(resp.data.payload));
+      yield put(setSingleInvoice(resp.data.payload));
       yield call(action.payload.cb, action.res = resp)
       // toast.success(action.res.data.msg);
     }
@@ -75,7 +75,7 @@ function* getSingleInvoice(action) {
       throw resp
     }
   } catch (e) {
-    // yield put(setPostUserLikeList({}));
+    yield put(setSingleInvoice({}));
     yield put(onErrorStopLoad())
     // toast.error(e.response.data.msg);
   }
@@ -95,7 +95,7 @@ function* allInvoice(action) {
   } catch (e) {
     // yield put(setAllDashboardData({}));
     yield put(onErrorStopLoad())
-    toast.error(e.response.data.msg);
+    // toast.error(e.response.data.msg);
   }
 }
 
@@ -107,7 +107,7 @@ function* deleteInvoice(action) {
 
     const resp = yield call(ApiClient.delete, action.url = ApiPath.InvoiceApiPath.DELETE_INVOICE+"/"+action.payload.id , action.params = {});
     if (resp.status) {
-      // yield put(setDeletePost(resp.data.payload));
+      yield put(setDeleteInvoice(resp.data.payload));
       yield call(action.payload.cb, action.res = resp)
       //toast.success(action.res.data.msg);
     }
@@ -115,9 +115,10 @@ function* deleteInvoice(action) {
       throw resp
     }
   } catch (e) {
+    yield put(setDeleteInvoice({}));
     // yield put(setUpdateUserProfileStatus({}));
     yield put(onErrorStopLoad())
-    toast.error(e?.response?.data?.msg);
+    // toast.error(e?.response?.data?.msg);
   }
 }
 
@@ -126,7 +127,7 @@ function* userInvoice() {
     
     takeLatest('invoice/addInvoice', addInvoice),
     takeLatest('invoice/updateInvoice', updateInvoice),
-    takeLatest('invoice/getSingleInvoice', getSingleInvoice),
+    takeLatest('invoice/singleInvoice', singleInvoice),
     takeLatest('invoice/allInvoice', allInvoice),
     takeLatest('invoice/deleteInvoice', deleteInvoice),
   ])

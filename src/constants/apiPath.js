@@ -10,7 +10,7 @@ const ApiPath = {
     CHANGE_PASSWORD: "/api/v1/users/change-password",
     RESET_PASSWORD: "/api/v1/users/reset-password",
     VERIFY_EMAIL: "/api/v1/users/verify-email",
-    RESEND_OTP: "/api/v1/users/reset-password",
+    RESEND_OTP: "/api/v1/users/send-otp",
     USER_INFO: "/api/v1/users/user-info",
     UPLOAD_IMAGE:"/api/v1/users/upload-single-image"
   },
@@ -20,7 +20,7 @@ const ApiPath = {
     UPDATE_INVOICE: "/api/v1/forms/update-invoice",
     ALL_INVOICE: "/api/v1/forms/get-all-invoice",
     SINGLE_INVOICE: "/api/v1/forms/get-single-invoice",
-    DELETE_INVOICE: "/api/v1/forms/delete-invoice/:invoiceId",
+    DELETE_INVOICE: "/api/v1/forms/delete-invoice",
   },
 };
 

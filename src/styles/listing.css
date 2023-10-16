@@ -1,0 +1,23 @@
+.actionBtns .actionBTN {
+    background: rgb(15, 114, 190) !important;
+    color: white !important;
+    /* padding: 10px 13px !important; */
+    height: 34px;
+    width: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.actionBtns {
+    display: flex;
+    align-items: center;
+}
+.actionBTN {
+    background: rgb(15, 114, 190) !important;
+    color: white !important;
+
+    /* padding: 4px 13px !important; */
+}

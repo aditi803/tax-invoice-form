@@ -3,30 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   userInfo: {},
   verifyOtp: {},
-  uploadbanner: {},
-  industryGroups: {},
-  industrySubGroups: {},
-  businessOwnershipType: {},
-  businessGenesis:{},
-  companyListType: {},
   userSignUp: {},
-  userStep: {},
-  userSiteAccess: {},
-  userSocialLogin: {},
-  companyProfileInfo: {},
-  uploadCertificate: {},
-  deleteCertificate: {},
-  certificatesList: {},
-  companyUpdateLogoBanner: {},
+  resendOtp:{},
   userForgetPassword: {},
   forgetPasswodVerifyOtp: {},
   resetPassword: {},
-  memeberShipId: {},
-  memberShipAmount: {},
-  searchCompanyUsers:[],
   isLoggedIn: false,
-
-  uploadImage:{},
+  uploadImage: {},
   loading: false,
 };
 
@@ -41,29 +24,36 @@ export const authSlice = createSlice({
       state.loading = false;
       state.uploadImage = action.payload;
     },
-    // companyLogoUpload: (state) => {
-    //   state.loading = true;
-    // },
-    // setCompanyLogoUpload: (state, action) => {
-    //   state.loading = false;
-    //   state.editProfile = action.payload;
-    // },
-
-    userLogin: (state) => {
-      state.loading = true;
-    },
-    setUserLogin: (state, action) => {
-      state.loading = false;
-      state.isLoggedIn = true;
-      state.userInfo = action.payload;
-      state.userStep = action.payload;
-    },
     userSignUp: (state) => {
       state.loading = true;
     },
     setUserSignUp: (state, action) => {
       state.loading = false;
       state.userSignUp = action.payload;
+    },
+    resendOtp: (state) => {
+      state.loading = true;
+    },
+    setResendOtp: (state, action) => {
+      state.loading = false;
+      state.isLoggedIn = true;
+      // state.userInfo = action.payload;
+    },
+    verifyEmail: (state) => {
+      state.loading = true;
+    },
+    setVerifyEmail: (state, action) => {
+      state.loading = false;
+      state.isLoggedIn = true;
+      // state.userInfo = action.payload;
+    },
+    userLogin: (state) => {
+      state.loading = true;
+    },
+    setUserLogin: (state, action) => {
+      state.loading = false;
+      state.isLoggedIn = true;
+      // state.userInfo = action.payload;
     },
     userForgetPassword: (state) => {
       state.loading = true;
@@ -72,24 +62,14 @@ export const authSlice = createSlice({
       state.loading = false;
       state.userForgetPassword = action.payload;
     },
-    userSocialLoginSignup: (state) => {
+    userInfo: (state) => {
       state.loading = true;
     },
-    setUserSocialLoginSignup: (state, action) => {
+    setUserInfo: (state, action) => {
       state.loading = false;
-      // state.userSignUp = action.payload
       state.userInfo = action.payload;
-      state.userStep = action.payload;
     },
-    userOtp: (state) => {
-      state.loading = true;
-    },
-    setUserOtp: (state, action) => {
-      state.loading = false;
-      state.isLoggedIn = true;
-      state.userInfo = action.payload;
-      state.userStep = action.payload;
-    },
+
     userVerifyOtp: (state) => {
       state.loading = true;
     },
@@ -99,6 +79,8 @@ export const authSlice = createSlice({
       state.verifyOtp = action.payload;
       // state.userStep = action.payload
     },
+
+
     forgetPasswodVerifyOtp: (state) => {
       state.loading = true;
     },
@@ -114,132 +96,20 @@ export const authSlice = createSlice({
       state.loading = false;
       state.resetPassword = action.payload;
     },
-    signUpStep: (state) => {
-      state.loading = true;
-    },
-    setSignUpStep: (state, action) => {
-      state.loading = false;
-      state.userStep = action.payload;
-    },
-    stepThreeCompanyLogoUplaod: (state) => {
-      state.loading = true;
-    },
-    setStepThreeCompanyLogoUplaod: (state, action) => {
-      state.loading = false;
-      state.editProfile = action.payload;
-    },
-    companyBannerUplaod: (state) => {
-      state.loading = true;
-    },
-    setCompanyBannerUplaod: (state, action) => {
-      state.loading = false;
-      state.uploadbanner = action.payload;
-    },
-    getAllIndustryGroups: (state) => {
-      state.loading = true;
-    },
-    setGetAllIndustryGroups: (state, action) => {
-      state.loading = false;
-      state.industryGroups = action.payload;
-    },
-    getAllIndustrySubGroups: (state) => {
-      state.loading = true;
-    },
-    setGetAllIndustrySubGroups: (state, action) => {
-      state.loading = false;
-      state.industrySubGroups = action.payload;
-    },
-    businessOwnershipType: (state) => {
-      state.loading = true;
-    },
-    setBusinessOwnershipType: (state, action) => {
-      state.loading = false;
-      state.businessOwnershipType = action.payload;
-    },
-    businessGenesis: (state) => {
-      state.loading = true;
-    },
-    setBusinessGenesis: (state, action) => {
-      state.loading = false;
-      state.businessGenesis = action.payload;
-    },
-    companyListType: (state) => {
-      state.loading = true;
-    },
-    setCompanyListType: (state, action) => {
-      state.loading = false;
-      state.companyListType = action.payload;
-    },
-    getCompanyProfileInfo: (state) => {
-      state.loading = true;
-    },
-    setGetCompanyProfileInfo: (state, action) => {
-      state.loading = false;
-      state.companyProfileInfo = action.payload;
-    },
     editProfile: (state) => {
       state.loading = true;
     },
     setEditProfile: (state, action) => {
       state.loading = false;
-      state.userInfo = action.payload;
+      // state.userInfo = action.payload;
     },
     companyEditProfile: (state) => {
       state.loading = true;
     },
     setCompanyEditProfile: (state, action) => {
       state.loading = false;
-      state.userInfo = action.payload;
+      // state.userInfo = action.payload;
       state.uploadbanner = action.payload?.user?.user_company_information;
-    },
-    companyUpdateLogoBanner: (state) => {
-      state.loading = true;
-    },
-    setCompanyUpdateLogoBanner: (state, action) => {
-      state.loading = false;
-      state.companyUpdateLogoBanner = action.payload;
-    },
-    addCertificates: (state) => {
-      state.loading = true;
-    },
-    setAddCertificates: (state, action) => {
-      state.loading = false;
-      state.uploadCertificate = action.payload;
-    },
-    deleteCertificates: (state) => {
-      state.loading = true;
-    },
-    setDeleteCertificates: (state, action) => {
-      state.loading = false;
-      state.deleteCertificate = action.payload;
-    },
-    certificatesList: (state) => {
-      state.loading = true;
-    },
-    setCertificatesList: (state, action) => {
-      state.loading = false;
-      state.certificatesList = action.payload;
-    },
-    userSiteAccess: (state) => {
-      state.loading = true;
-    },
-    setUserSiteAccess: (state, action) => {
-      state.loading = false;
-      state.userSiteAccess = action.payload;
-    },
-    getSessionId: (state) => {
-      state.loading = true;
-    },
-    setGetSessionId: (state, action) => {
-      state.loading = false;
-      state.memeberShipId = action.payload;
-    },
-    updateMemberShipAmount: (state) => {
-      state.loading = true;
-    },
-    setUpdateMemberShipAmount: (state, action) => {
-      state.loading = false;
-      state.memberShipAmount = action.payload;
     },
     changePassword: (state) => {
       state.loading = false;
@@ -259,7 +129,7 @@ export const authSlice = createSlice({
     },
     setUserProfileUpdate: (state, action) => {
       state.loading = true;
-      state.userInfo = action.payload;
+      // state.userInfo = action.payload;
     },
     companyLogoUpload: (state) => {
       state.loading = true;
@@ -273,7 +143,7 @@ export const authSlice = createSlice({
     },
     setUserCompanyProfileUpdate: (state, action) => {
       state.loading = false;
-      state.userInfo = action.payload;
+      // state.userInfo = action.payload;
     },
     userExistingCertificationsUpdate: (state) => {
       state.loading = false;
@@ -298,11 +168,11 @@ export const authSlice = createSlice({
       state.isLoggedIn = false;
     },
     setSubscriptionID: (state) => {
-        state.loading = true;
+      state.loading = true;
     },
     subscriptionIDSet: (state, action) => {
-        state.loading = false;
-        state.userInfo.user = action.payload;
+      state.loading = false;
+      // state.userInfo.user = action.payload;
     },
     searchCompanyUserFun: (state, action) => {
       state.loading = true;
@@ -311,7 +181,7 @@ export const authSlice = createSlice({
       state.loading = false;
       state.searchCompanyUsers = action.payload
     },
-    updateUserStep :  (state, action) => {
+    updateUserStep: (state, action) => {
       state.userStep = action.payload ?? state.userStep;
     },
     onErrorStopLoad: (state) => {
@@ -322,12 +192,19 @@ export const authSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
-  userLogin,
   setUploadImage,
   uploadImage,
-  setUserLogin,
+  resendOtp,
+  setResendOtp,
   userSignUp,
   setUserSignUp,
+  verifyEmail,
+  setVerifyEmail,
+  userLogin,
+  setUserLogin,
+  userInfo,
+  setUserInfo,
+  
   userSocialLoginSignup,
   setUserSocialLoginSignup,
   userOtp,

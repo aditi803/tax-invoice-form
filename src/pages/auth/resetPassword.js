@@ -10,15 +10,25 @@ const ResetPassword = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    let emailId = location?.state?.email;
+    // let emailId = location?.state?.email;
+
+    const emailId = localStorage.getItem("email")
     const [email, setEmail] = useState(emailId);
     const [newPassword, setNewPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("")
     const [passwordShown, setPasswordShown] = useState(false);
+    const [passwordShownConfirm, setPasswordShownConfirm] = useState(false);
 
     //password field show or hide
     const togglePasswordVisiblity = () => {
         setPasswordShown(passwordShown ? false : true);
     };
+
+    //password field show or hide
+    const togglePasswordVisiblityConfirm = () => {
+        setPasswordShownConfirm(passwordShownConfirm ? false : true);
+    };
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -38,9 +48,18 @@ const ResetPassword = () => {
             toast.error("Password must be at least 8 characters long with 1 capital letter, 1 number and 1 special character");
             return;
         }
+        else if (!confirmPassword) {
+            toast.error("Please enter password");
+            return;
+        }
+        else if(newPassword !== confirmPassword){
+            toast.error("Password does not match");
+            return;
+        }
         let params = {
             email: email,
-            new_password: newPassword
+            newPassword: newPassword,
+            confirmPassword:confirmPassword
         }
         dispatch(resetPassword({
             ...params, cb(res) {
@@ -74,13 +93,19 @@ const ResetPassword = () => {
                                         <input value={email} name="email" type='email' className='customFormControl' placeholder='Enter Email Address' onChange={(e) => setEmail(e.target.value)} />
                                     </div>
                                     <div className='form-group mb-3'>
-                                    <label className='postopportunity_label'>New Password</label>
-                                    <input onChange={(e) => setNewPassword(e.target.value)} type={passwordShown ? "text" : "password"} value={newPassword} autoComplete="on" name="password" className='customFormControl' placeholder='Password' />
-                                    <span className="toggle_password_ info_icon" onClick={() => { togglePasswordVisiblity(!passwordShown) }}>
-                                        <span className={passwordShown ? "show-icon togglePassword" : "hide-icon togglePassword"} id=""></span>
-                                    </span>
+                                        <label className='postopportunity_label'>New Password</label>
+                                        <input onChange={(e) => setNewPassword(e.target.value)} type={passwordShown ? "text" : "password"} value={newPassword} autoComplete="on" name="password" className='customFormControl' placeholder='Password' />
+                                        <span className="toggle_password_ info_icon" onClick={() => { togglePasswordVisiblity(!passwordShown) }}>
+                                            <span className={passwordShown ? "show-icon togglePassword" : "hide-icon togglePassword"} id=""></span>
+                                        </span>
                                     </div>
-                                    
+                                    <div className='form-group mb-3'>
+                                        <label className='postopportunity_label'>Confirm Password Password</label>
+                                        <input onChange={(e) => setConfirmPassword(e.target.value)} type={passwordShownConfirm ? "text" : "password"} value={confirmPassword} autoComplete="on" name="password" className='customFormControl' placeholder='Password' />
+                                        <span className="toggle_password_ info_icon" onClick={() => { togglePasswordVisiblityConfirm(!passwordShownConfirm) }}>
+                                            <span className={passwordShownConfirm ? "show-icon togglePassword" : "hide-icon togglePassword"} id=""></span>
+                                        </span>
+                                    </div>
                                 </div>
 
                                 <div className=' text-center'>

@@ -130,7 +130,7 @@ const axiosPostFormData = (url, params) => {
 
     else {
         var formData = new FormData();
-        formData.append('photo', params?.photo);
+        formData.append('image', params?.photo);
     }
     return axiosInstance.post(url, formData)
         .then(response => {
