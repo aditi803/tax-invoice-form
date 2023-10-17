@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
 import { singleInvoice, updateInvoice } from '../../redux/slices/invoice'
 import { useDispatch } from 'react-redux'
+import {toast} from "react-toastify"
 
 const EditInvoice = () => {
     const location = useLocation()
@@ -22,7 +23,7 @@ const EditInvoice = () => {
                     //   setData()
                 }
                 else {
-                    console.log("Error in dispatch");
+                    toast.error("Error occured");
                 }
             }
         }))
@@ -43,7 +44,7 @@ const EditInvoice = () => {
                     //   setData()
                 }
                 else {
-                    console.log("Error in dispatch");
+                   toast.error("Error occured");
                 }
             }
         }))

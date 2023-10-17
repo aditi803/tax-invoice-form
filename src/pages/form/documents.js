@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import "../../styles/listing.css"
 import { useNavigate } from 'react-router';
 import { fullDateFormat } from '../../common/utility';
+import {toast} from "react-toastify"
 
 const Documents = () => {
   const [data, setData] = useState("")
@@ -88,11 +89,10 @@ const Documents = () => {
         dispatch(deleteInvoice({
           ...params, cb(res) {
             if (res.status) {
-              console.log(res, "response of images");
               allInvoices()
             }
             else {
-              console.log("Error in dispatch");
+              toast.error("Error occured");
             }
           }
         }))
@@ -172,7 +172,6 @@ const Documents = () => {
 
 
 
-  console.log(data, "ddata received");
   const allInvoices = () => {
     let params = {
 
@@ -180,14 +179,13 @@ const Documents = () => {
     dispatch(allInvoice({
       ...params, cb(res) {
         if (res.status) {
-          console.log(res, "response of images");
           setData(res?.data?.data)
           // setPhotoUpload(res?.data?.payload?.url);
           // setPhotoInfo(res?.data?.payload)
           // setData()
         }
         else {
-          console.log("Error in dispatch");
+          toast.error("Error in dispatch");
         }
       }
     }))

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
 import { singleInvoice } from '../../redux/slices/invoice'
 import { useDispatch } from 'react-redux'
+import {toast} from "react-toastify"
 
 const ViewInvoice = () => {
 
@@ -17,14 +18,13 @@ const ViewInvoice = () => {
         dispatch(singleInvoice({
           ...params, cb(res) {
             if (res.status) {
-              console.log(res, "response of images");
               // setData() 
               // setPhotoUpload(res?.data?.payload?.url);
               // setPhotoInfo(res?.data?.payload)
             //   setData()
             }
             else {
-              console.log("Error in dispatch");
+              toast.error("Error in dispatch");
             }
           }
         }))

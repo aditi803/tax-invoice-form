@@ -8,8 +8,6 @@ const Header = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  console.log(token, "token");
-
   const getUser = () => {
 
     let params = {
@@ -29,7 +27,6 @@ const Header = () => {
   }
 
   const handleDocument = () => {
-    console.log("token in document ",token)
     if (token === null) {
       navigate("/signup")
     }

@@ -117,7 +117,6 @@ const Signup = () => {
       dispatch(userSignUp({
         ...params, cb(res) {
           if (res.status) {
-            console.log(res, "response of email");
             navigate('/forgot-password-verification', { state: { id: res?.data?.payload?.user_id, status: id } });
             localStorage.setItem('email', formData.email.trim())
           }

@@ -9,11 +9,7 @@ const Login = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    // const id = location?.state?.id;
-    // const roleId = location?.state?.roleId;
 
-
-    // console.log(roleId, "roleId");
     const authSelector = useAuthSelector()
     const [errorMessages, setErrorMessages] = useState({});
     const [formData, setFormData] = useState({

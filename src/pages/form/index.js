@@ -18,6 +18,7 @@ import Listing from "./documents";
 import { uploadImage } from "../../redux/slices/auth";
 import { addInvoice, invoiceData } from "../../redux/slices/invoice";
 import { useNavigate } from "react-router";
+import {toast} from "react-toastify"
 
 const MyForm = () => {
   const [showListing, setshowListing] = useState(false)
@@ -58,8 +59,6 @@ const MyForm = () => {
       [name]: value,
     });
   };
-
-  console.log(data, ">>>>> data");
 
   // const dispatch = useDispatch()
   const [selectedCountry, setSelectedCountry] = useState("India");
@@ -128,21 +127,6 @@ const MyForm = () => {
     });
   };
 
-  // const getCountryData = (e) => {
-  //     dispatch(allCountries({
-  //         cb(res) {
-  //             if (res) {
-  //                 setCountry(res)
-  //             }
-  //             else {
-
-  //             }
-  //         }
-  //     }))
-  // }
-
-  // console.log(country, "country");
-
   const addBillingDetail = () => {
     setBilling([
       ...billing,
@@ -171,18 +155,16 @@ const MyForm = () => {
   };
 
   //onDrop
-  const onDrop = useCallback(acceptedFiles => {
+  const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
     const imageFile = acceptedFiles[0];
-    // if (!imageFile.name.match(/\.(jpg|jpeg|png|gif|svg)$/)) {
-    //     toast.error("Please select a valid image.");
-    //     return false;
-    // }
-    // if (!imageFile.name.match(/\.(jpg|jpeg|png|gif|svg|pdf)$/i)) {
-    //     toast.error("Please select a valid image or PDF file.");
-    //     return false;
-    // }
-
-    console.log(imageFile, 'image file');
+    if (
+      rejectedFiles.length > 0 &&
+      rejectedFiles[0]?.file?.type !== "image/jpeg" &&
+      "image/jpg" && "image/png"
+    ) {
+      toast.error("Please select valid image format");
+      return;
+    }
     let params = {
       photo: imageFile,
     }
@@ -190,36 +172,30 @@ const MyForm = () => {
     dispatch(uploadImage({
       ...params, cb(res) {
         if (res.status) {
-          console.log(res, "response of images");
-          // setPhotoUpload(res?.data?.payload?.url);
-          // setPhotoInfo(res?.data?.payload)
           setData({
             ...data,
             image: res?.data?.data?.imageurl
           })
         }
         else {
-          console.log("Error in dispatch");
+          toast.error("Error occured");
         }
       }
     }))
 
   }, [])
 
-  const { getRootProps, getInputProps } =
+  const { getRootProps, getInputProps, isDragActive } =
 
     useDropzone({
       onDrop,
       accept: {
-        'image/jpeg': [],
-        'image/jpg': [],
-        'image/png': [],
+        "image/jpeg": [".jpeg", ".jpg", ".png"],
       }
     });
 
   const downloadPdfDocument = (e) => {
     e.preventDefault()
-    console.log(typeof document.getElementById('hhh'))
     const div = document.createElement('div');
     const staticElement = ReactDOMServer.renderToStaticMarkup(<Template data={data} />)
     div.innerHTML = staticElement
@@ -234,26 +210,19 @@ const MyForm = () => {
     document.body.removeChild(div)
   };
 
-  console.log(data?.image, "image uploaded received");
-
   const savePdfDocument = (e) => {
     e.preventDefault()
     let params = {
       name: companyName,
-      data:data
+      data: data
     }
-    console.log(params, "params ");
-    console.log("Hello function");
     dispatch(addInvoice({
       ...params, cb(res) {
         if (res.status) {
-          console.log(res, "response of images");
-          // setPhotoUpload(res?.data?.payload?.url);
-          // setPhotoInfo(res?.data?.payload)
-          // setData()
+          setData("")
         }
         else {
-          console.log("Error in dispatch");
+         toast.error("Error in dispatch");
         }
       }
     }))
@@ -275,7 +244,13 @@ const MyForm = () => {
                 <div className="row">
                   <div className="col-3">
                     <label className="add-logo">
-                      <div {...getRootProps({ className: "dropzone" })}>
+                      <div className={
+                        isDragActive
+                          ? "uploadInner_ drag-active w-100"
+                          : "uploadInner_ w-100"
+                      }
+                        {...getRootProps()}
+                      >
                         <input {...getInputProps()} />
                         <span className="add-logo-label">
                           <div>Upload</div>

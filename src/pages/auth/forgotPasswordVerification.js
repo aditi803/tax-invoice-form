@@ -11,7 +11,6 @@ import { Button } from 'bootstrap';
 const ForgotPasswordVerification = () => {
 
     const email = localStorage.getItem('email');
-    console.log(email, "email entered");
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
@@ -39,11 +38,10 @@ const ForgotPasswordVerification = () => {
         dispatch(verifyEmail({
             ...params, cb(res) {
                 if (res.status) {
-                    console.log(res,"function entered");
                     navigate("/")
                 }
                 else {
-                    console.log("Error occured")
+                    toast.error("Error Occured");
                 }   
             }
         }))
@@ -57,7 +55,6 @@ const ForgotPasswordVerification = () => {
             ...params, cb(res) {
                 if (res) {
                     toast.success("OTP send successfully")
-                    console.log(res, "response received");
                 }
 
             }
