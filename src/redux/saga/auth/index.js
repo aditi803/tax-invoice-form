@@ -11,7 +11,8 @@ function* userLogin(action) {
     // const resp = yield call(ApiClient.post, action.url = `${ApiPath.CREATE_USER}/name=${action.payload.name}`);
     const resp = yield call(ApiClient.post, action.url = ApiPath.AuthApiPath.LOGIN_USER, action.payload = action.payload);
     if (resp.status) {
-      localStorage.setItem("authToken", resp.data?.payload.token ? resp.data.payload.token : "")
+      console.log(resp, "response in saga");
+      localStorage.setItem("authToken", resp.data?.data?.token ? resp?.data?.data?.token : "")
       yield put(setUserLogin(resp.data.payload));
       yield call(action.payload.cb, action.res = resp)
       toast.success(action.res.data.msg);

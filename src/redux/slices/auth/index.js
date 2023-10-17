@@ -117,6 +117,7 @@ export const authSlice = createSlice({
     setChangePassword: (state, action) => {
       state.loading = true;
     },
+    
     userPhotoUpload: (state) => {
       state.loading = false;
     },

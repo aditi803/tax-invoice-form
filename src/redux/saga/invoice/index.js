@@ -32,7 +32,7 @@ function* addInvoice(action) {
     if (resp.status) {
       yield put(setAddInvoice(resp.data.payload));
       yield call(action.payload.cb, action.res = resp)
-      // toast.success(action.res.data.msg);
+      toast.success(action.res.data.msg);
     }
     else {
       throw resp
@@ -40,7 +40,7 @@ function* addInvoice(action) {
   } catch (e) {
     yield put(setAddInvoice({}));
     yield put(onErrorStopLoad())
-    // toast.error(e.response.data.msg);
+    toast.error(e.response.data.msg);
   }
 }
 

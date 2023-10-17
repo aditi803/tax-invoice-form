@@ -22,8 +22,10 @@ const MyForm = () => {
   const [showListing, setshowListing] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  const [companyName, setCompanyName] = useState("")
   const [data, setData] = useState({
-    company: "",
+    // company: "",
     name: "",
     companyGST: "",
     companyAddress: "",
@@ -231,12 +233,13 @@ const MyForm = () => {
     document.body.removeChild(div)
   };
 
-  console.log(data.image, "image uploaded received");
+  console.log(data?.image, "image uploaded received");
 
   const savePdfDocument = (e) => {
     e.preventDefault()
     let params = {
-      data: data,
+      name: companyName,
+      data:data
     }
     console.log(params, "params ");
     console.log("Hello function");
@@ -246,7 +249,7 @@ const MyForm = () => {
           console.log(res, "response of images");
           // setPhotoUpload(res?.data?.payload?.url);
           // setPhotoInfo(res?.data?.payload)
-          setData()
+          // setData()
         }
         else {
           console.log("Error in dispatch");
@@ -254,6 +257,7 @@ const MyForm = () => {
       }
     }))
   };
+
   const handleDocuments = () => {
     // setshowListing(true)
     navigate("/all-documents")
@@ -301,8 +305,8 @@ const MyForm = () => {
                   type="text"
                   className="form-control"
                   id="name"
-                  name="company"
-                  onChange={handleDataChange}
+                  name="companyName"
+                  onChange={(e) => setCompanyName(e.target.value)}
                   placeholder="Your Company"
                 />
                 <input

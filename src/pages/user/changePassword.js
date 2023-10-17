@@ -24,6 +24,9 @@ const Changepassword = (props) => {
     const NewtogglePasswordVisiblity = () => {
         NewsetPasswordShown(NewpasswordShown ? false : true);
     };
+    const ConfirmtogglePasswordVisiblity = () => {
+        ConfirmsetPasswordShown(ConfirmpasswordShown ? false : true);
+    };
 
     //form login
     const handleSubmit = (e) => {
@@ -44,9 +47,18 @@ const Changepassword = (props) => {
             toast.error("new Password should be maximum 8 character")
             return;
         }
+        else if (!formData.confirmPassword) {
+            toast.error("Please enter new password");
+            return;
+        }
+        else if (formData.newpassword !== formData.confirmPassword) {
+            toast.error("new password and confirm password should match")
+            return;
+        }
         let params = {
-            old_password: formData.oldpassword,
-            new_password: formData.newpassword
+            oldPassword: formData.oldpassword,
+            newPassword: formData.newpassword,
+            confirmPassword:formData.confirmPassword
         }
         dispatch(changePassword({
             ...params, cb(res) {
@@ -96,9 +108,9 @@ const Changepassword = (props) => {
                     </div>
                     <div className='form-group  mb-3'>
                         <label className='postopportunity_label'>Confirm Password</label>
-                        <input type={NewpasswordShown ? "text" : "password"} value={formData.confirmPassword} name="newpassword" onChange={(e) => handleChange(e)} className='customFormControl' placeholder='New Password' />
-                        <span className="toggle_password_ info_icon" onClick={() => { NewtogglePasswordVisiblity(!NewpasswordShown) }}>
-                            <span className={NewpasswordShown ? "show-icon togglePassword" : "hide-icon togglePassword"} id=""></span>
+                        <input type={ConfirmpasswordShown ? "text" : "password"} value={formData.confirmPassword} name="confirmPassword" onChange={(e) => handleChange(e)} className='customFormControl' placeholder='Confirm Password' />
+                        <span className="toggle_password_ info_icon" onClick={() => { ConfirmtogglePasswordVisiblity(!ConfirmpasswordShown) }}>
+                            <span className={ConfirmpasswordShown ? "show-icon togglePassword" : "hide-icon togglePassword"} id=""></span>
                         </span>
                     </div>
                     <div className='button_box text-center  my-2'>

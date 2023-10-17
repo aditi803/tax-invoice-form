@@ -5,66 +5,67 @@ import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import "../styles/listing.css"
 import { useNavigate } from 'react-router';
+import { fullDateFormat } from '../common/utility';
 
 const Listing = () => {
   const [data, setData] = useState("")
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const columns = [
-    {
-      name: 'ID',
-      selector: 'id',
-      sortable: true,
-    },
-    {
-      name: 'Name',
-      selector: 'name',
-      sortable: true,
-    },
-    {
-      name: 'Email',
-      selector: 'email',
-      sortable: true,
-    },
-    {
-      name: "Actions",
-      selector: row => (
-        <>
-          <div className='actionBtns'>
-            <div className='actionBTN me-2'
-              onClick={() => {
-                navigate('/edit-invoice', { invoiceId: row._id })
-              }}
-            >
-              <i className="fas fa-pen"
-              >
-                <p>Edit</p>
-              </i>
-            </div>
-            <div className='actionBTN me-2' onClick={() => {
-              handleDeleteProduct(row._id)
-            }}>
-              <i className="fas fa-trash"
-              >
-                <p>Delete</p>
-              </i>
-            </div>
-            <div className='actionBTN'
-              onClick={() => {
-                navigate('/view-invoice', { invoiceId: row._id })
-              }}
-            >
-              <i className="fas fa-eye" >
-                <p>View</p>
-              </i>
-            </div>
-          </div>
-        </>
-      ),
-      width: '200px'
-    },
-  ];
+  // const columns = [
+  //   {
+  //     name: 'ID',
+  //     selector: 'id',
+  //     sortable: true,
+  //   },
+  //   {
+  //     name: 'Name',
+  //     selector: 'name',
+  //     sortable: true,
+  //   },
+  //   {
+  //     name: 'Email',
+  //     selector: 'email',
+  //     sortable: true,
+  //   },
+  //   {
+  //     name: "Actions",
+  //     selector: row => (
+  //       <>
+  //         <div className='actionBtns'>
+  //           <div className='actionBTN me-2'
+  //             onClick={() => {
+  //               navigate('/edit-invoice', { invoiceId: row._id })
+  //             }}
+  //           >
+  //             <i className="fas fa-pen"
+  //             >
+  //               <p>Edit</p>
+  //             </i>
+  //           </div>
+  //           <div className='actionBTN me-2' onClick={() => {
+  //             handleDeleteProduct(row._id)
+  //           }}>
+  //             <i className="fas fa-trash"
+  //             >
+  //               <p>Delete</p>
+  //             </i>
+  //           </div>
+  //           <div className='actionBTN'
+  //             onClick={() => {
+  //               navigate('/view-invoice', { invoiceId: row._id })
+  //             }}
+  //           >
+  //             <i className="fas fa-eye" >
+  //               <p>View</p>
+  //             </i>
+  //           </div>
+  //         </div>
+  //       </>
+  //     ),
+  //     width: '200px'
+  //   },
+  // ];
 
 
   const handleDeleteProduct = (invoiceId) => {
@@ -100,58 +101,68 @@ const Listing = () => {
 
   }
 
-  //   const columns = [
-  //     {
-  //         name: "Sr. No.",
-  //         selector: (row, index) => (index + 1 *(pagination.recordsPerPage  *(page - 1)) + 1),
-  //         // selector: (row, index) => index + 1,
-  //         sortable: true,
-  //     },
-  //     {
-  //         name: "Template Name",
-  //         selector: row => row.title,
-  //         // selector: "productName",
-  //     },
-  //     {
-  //         name: "Created On",
-  //         selector: row => fullDateFormat(row.createdAt),
-  //         // selector: "productName",
-  //     },
-  //     {
-  //         name: "Actions",
-  //         selector: row => (
-  //             <>
-  //                 <div className='actionBtns'>
-  //                     <div className='actionBTN me-2'
-  //                    onClick={() => {
-  //                     history.push('/view-template', { productId: row._id })
-  //                 }}  
-  //                     >
-  //                         <i class="fas fa-pen"
-  //                         >
-  //                         </i>
-  //                     </div>
-  //                     <div className='actionBTN me-2' onClick={() => {
-  //                         handleDeleteProduct(row._id)
-  //                     }}>
-  //                         <i class="fas fa-trash"
-  //                         >
-
-  //                         </i>
-  //                     </div>
-  //                     <div className='actionBTN'
-  //                     onClick={() => {
-  //                         history.push('/view-template', { productId: row._id })
-  //                     }}
-  //                     >
-  //                         <i class="fas fa-eye" ></i>
-  //                     </div>
-  //                 </div>
-  //             </>
-  //         ),
-  //         width:'200px'
-  //     },
-  // ]
+  const columns = [
+    {
+      name: "Sr. No.",
+      selector: (row, index) => row.id,
+      sortable: true,
+    },
+    {
+      name: "Name",
+      selector: row => row.name,
+      // selector: "productName",
+    },
+    {
+      name: "Created On",
+      selector: row => fullDateFormat(row.created_at),
+      // selector: "productName",
+    },
+    {
+      name: "Invoice Date",
+      selector: row => row.invoiceDate ? fullDateFormat(row.invoiceDate) : "N/A",
+      // selector: "productName",
+    },
+    {
+      name: "Due Date",
+      selector: row => row.dueDate ? fullDateFormat(row.dueDate) : "N/A",
+      // selector: "productName",
+    },
+    {
+      name: "Actions",
+      selector: row => (
+        <>
+          <div className='actionBtns'>
+            <div className='actionBTN me-2'
+              onClick={() => {
+                navigate('/edit-invoice', { invoiceId: row._id })
+              }}
+            >
+              <i class="fas fa-pen"
+              >
+                Edit
+              </i>
+            </div>
+            <div className='actionBTN me-2' onClick={() => {
+              handleDeleteProduct(row.id)
+            }}>
+              <i class="fas fa-trash"
+              >
+                Delete
+              </i>
+            </div>
+            <div className='actionBTN'
+              onClick={() => {
+                navigate('/view-invoice', { invoiceId: row._id })
+              }}
+            >
+              <i class="fas fa-eye" >View</i>
+            </div>
+          </div>
+        </>
+      ),
+      width: '200px'
+    },
+  ]
 
   const obj = [
     { id: 1, name: 'John Doe', email: 'john.doe@example.com' },
@@ -159,6 +170,9 @@ const Listing = () => {
     // Add more data objects here
   ];
 
+
+
+  console.log(data, "ddata received");
   const allInvoices = () => {
     let params = {
 
@@ -167,10 +181,10 @@ const Listing = () => {
       ...params, cb(res) {
         if (res.status) {
           console.log(res, "response of images");
-          // setData() 
+          setData(res?.data?.data)
           // setPhotoUpload(res?.data?.payload?.url);
           // setPhotoInfo(res?.data?.payload)
-          setData()
+          // setData()
         }
         else {
           console.log("Error in dispatch");
@@ -181,14 +195,14 @@ const Listing = () => {
 
 
   useEffect(() => {
-    // allInvoices()
-    setData(obj)
+    allInvoices()
+    // setData(obj)
   }, [])
 
   return (
     <div className='container'>
       <h3>All saved documents</h3>
-      
+
       <DataTable
         striped
         columns={columns}

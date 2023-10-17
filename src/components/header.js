@@ -26,9 +26,9 @@ const Header = () => {
     navigate("/user-info")
   }
 
-  useEffect(() => {
-    getUser()
-  }, [])
+  // useEffect(() => {
+  //   getUser()
+  // }, [])
 
   return (
     <nav className="navbar">
