@@ -1,13 +1,13 @@
 import React, { useDebugValue, useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
-import { allInvoice, deleteInvoice } from '../redux/slices/invoice';
+import { allInvoice, deleteInvoice } from '../../redux/slices/invoice';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
-import "../styles/listing.css"
+import "../../styles/listing.css"
 import { useNavigate } from 'react-router';
-import { fullDateFormat } from '../common/utility';
+import { fullDateFormat } from '../../common/utility';
 
-const Listing = () => {
+const Documents = () => {
   const [data, setData] = useState("")
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -212,4 +212,4 @@ const Listing = () => {
   )
 }
 
-export default Listing
+export default Documents

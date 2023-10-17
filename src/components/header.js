@@ -8,6 +8,8 @@ const Header = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
+  console.log(token, "token");
+
   const getUser = () => {
 
     let params = {
@@ -26,6 +28,16 @@ const Header = () => {
     navigate("/user-info")
   }
 
+  const handleDocument = () => {
+    console.log("token in document ",token)
+    if (token === null) {
+      navigate("/signup")
+    }
+    else {
+      navigate("/all-documents")
+    }
+  }
+
   // useEffect(() => {
   //   getUser()
   // }, [])
@@ -35,19 +47,24 @@ const Header = () => {
       <div className="container">
         <a href="/" className="navbar-brand">Your Logo</a>
         <ul className="navbar-nav">
-          {token != "" ?
-          
-          <p onClick={() => handleProfile()}>Hello</p> 
-          : <li className="nav-item">
-            <Link to='/signup' className="footerLinks">Signup</Link>
-            {/* <a href="/signup" className="nav-link">Signup</a> */}
-          </li>}
+          {token === null ?
+            <li className="nav-item">
+              <Link to='/signup' className="nav-link">Signup</Link>
+              {/* <a href="/signup" className="nav-link">Signup</a> */}
+            </li>
 
-          <li className="nav-item">
-            <a href="/about" className="nav-link">Save Online</a>
+            : <p onClick={() => handleProfile()}>Hello</p>}
+          <li className="nav-item" onClick={() => handleDocument()}>
+            <Link className="nav-link">
+              Documents
+
+            </Link>
           </li>
           <li className="nav-item">
-            <a href="/services" className="nav-link">Download</a>
+            <a href="/" className="nav-link">Save Online</a>
+          </li>
+          <li className="nav-item">
+            <a href="/" className="nav-link">Download</a>
           </li>
         </ul>
       </div>

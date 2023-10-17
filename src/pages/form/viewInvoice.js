@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
-import { singleInvoice } from '../redux/slices/invoice'
+import { singleInvoice } from '../../redux/slices/invoice'
 import { useDispatch } from 'react-redux'
 
 const ViewInvoice = () => {

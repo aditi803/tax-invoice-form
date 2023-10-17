@@ -17,9 +17,9 @@ import ForgetPasswordVerification from "./pages/auth/forgotPasswordVerification"
 import ResetPassword from "./pages/auth/resetPassword";
 import Changepassword from "./pages/user/changePassword";
 import UserInfo from "./pages/user";
-import ViewInvoice from "./pages/viewInvoice";
-import EditInvoice from "./pages/editInvoice";
-import Listing from "./pages/listing";
+import ViewInvoice from "./pages/form/viewInvoice";
+import EditInvoice from "./pages/form/editInvoice";
+import Documents from "./pages/form/documents";
 
 
 function App() {
@@ -40,7 +40,7 @@ function App() {
               <Route path="/user-info" element={<UserInfo />} />
               <Route path="/view-invoice" element={<ViewInvoice />} />
               <Route path="/edit-invoice" element={<EditInvoice />} />
-              <Route path="/all-documents" element={<Listing />} />
+              <Route path="/all-documents" element={<Documents />} />
             </Routes>
           </BrowserRouter>
         </PersistGate>

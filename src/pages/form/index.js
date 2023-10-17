@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "../styles/form.css";
+// import "../styles/form.css";
+import "../../styles/form.css"
 import { useDispatch } from "react-redux";
 import {
   CountryDropdown,
@@ -12,10 +13,10 @@ import { useDropzone } from 'react-dropzone';
 // import * as Images from '../utilities/images'
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
-import Template from "../components/Template";
-import Listing from "./listing";
-import { uploadImage } from "../redux/slices/auth";
-import { addInvoice, invoiceData } from "../redux/slices/invoice";
+import Template from "../../components/Template";
+import Listing from "./documents";
+import { uploadImage } from "../../redux/slices/auth";
+import { addInvoice, invoiceData } from "../../redux/slices/invoice";
 import { useNavigate } from "react-router";
 
 const MyForm = () => {
@@ -267,9 +268,6 @@ const MyForm = () => {
     <div className="container" id="hhh">
 
       <div className="row">
-        <div className="col-md-2">
-          <p onClick={() => handleDocuments()}>Saved Documents</p>
-        </div>
         <div className="col-md-8">
           <form className="invoice-generator">
             <div className="row">
